@@ -1,0 +1,21 @@
+---
+- name: Upgrade all packages
+  yum:
+    name: "*"
+    state: latest
+
+- name: Install yum-utils
+  yum:
+    name: "yum-utils"
+    state: latest
+
+- name: Check if a reboot is required
+  command: needs-restarting --reboothint
+  register: reboot_required
+  failed_when: reboot_required.rc > 1
+  changed_when: reboot_required.rc == 1
+
+- name: Reboot server if required
+  reboot:
+    msg: "Reboot initiated by Ansible"
+  when: reboot_required.changed

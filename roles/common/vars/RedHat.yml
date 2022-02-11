@@ -1,0 +1,10 @@
+---
+epel_repo_url: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+
+packages:
+  - cockpit-pcp
+  - cockpit-storaged
+  - dnf-automatic
+  - htop
+  - nfs-utils
+  - qemu-guest-agent

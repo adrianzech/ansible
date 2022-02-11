@@ -1,0 +1,9 @@
+---
+- hosts: all
+  remote_user: adrian
+  become: true
+  roles:
+    - update
+    - common
+    - ssh
+    - zabbix_agent

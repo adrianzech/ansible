@@ -1,0 +1,30 @@
+---
+- name: Set authorized keys
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ item }}"
+  with_file:
+    - adrianzech.pub
+    - ansible.pub
+  register: add_identity_key
+
+- name: Disable root login over ssh
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#?PermitRootLogin"
+    line: "PermitRootLogin {{ permit_root_login }}"
+    state: present
+  notify:
+    - Restart sshd
+
+- name: Disable password login over ssh
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#?PasswordAuthentication"
+    line: "PasswordAuthentication {{ password_authentication }}"
+    state: present
+  when:
+    - add_identity_key is succeeded
+  notify:
+    - Restart sshd

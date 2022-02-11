@@ -1,0 +1,5 @@
+---
+- name: Add zabbix repo
+  yum:
+    name: "{{ repo_url }}"
+    disable_gpg_check: true
