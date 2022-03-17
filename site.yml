@@ -7,3 +7,9 @@
     - common
     - ssh
     - zabbix_agent
+
+- hosts: podman
+  remote_user: adrian
+  become: true
+  roles:
+    - podman
