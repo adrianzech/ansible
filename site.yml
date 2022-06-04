@@ -6,7 +6,6 @@
     - update
     - common
     - ssh
-    - zabbix_agent
 
 - hosts: podman
   remote_user: adrian

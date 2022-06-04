@@ -7,3 +7,8 @@ packages:
   - dnf-automatic
   - htop
   - nfs-utils
+  - bash-completion
+  - wget
+  - tmux
+  - rsync
+  - vim
