@@ -1,0 +1,7 @@
+---
+packages:
+  - nfs-common
+  - net-tools
+  - qemu-guest-agent
+  - htop
+  - screen

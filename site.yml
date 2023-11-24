@@ -2,13 +2,13 @@
 - hosts: all
   remote_user: adrian
   become: true
+  vars:
+    user: adrian
   roles:
     - update
-    - common
     - ssh
-
-- hosts: podman
-  remote_user: adrian
-  become: true
-  roles:
-    - podman
+    - sudo
+    - unattended-upgrades
+    - packages
+    - docker
+    

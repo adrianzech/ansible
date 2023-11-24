@@ -1,2 +1,2 @@
 # Personal Ansible Roles
-ansible-playbook site.yml --extra-vars=@vars/vault.yml --ask-pass
+ansible-playbook site.yml --ask-pass --ask-become-pass

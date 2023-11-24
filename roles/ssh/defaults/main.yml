@@ -1,5 +1,3 @@
 ---
-user: adrian
-
 permit_root_login: "no"
 password_authentication: "no"

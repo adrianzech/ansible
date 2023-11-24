@@ -6,7 +6,6 @@
     key: "{{ item }}"
   with_file:
     - adrianzech.pub
-    - ansible.pub
   register: add_identity_key
 
 - name: Disable root login over ssh

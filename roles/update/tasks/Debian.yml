@@ -1,0 +1,11 @@
+---
+- name: Upgrade all packages
+  apt:
+    update_cache: yes
+    name: "*"
+    state: latest
+
+- name: Reboot server
+  reboot:
+    msg: "Reboot initiated by Ansible"
+    

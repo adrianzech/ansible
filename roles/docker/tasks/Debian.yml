@@ -1,0 +1,20 @@
+---
+- name: Add Docker gpg apt key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu jammy stable
+    state: present
+
+- name: Update apt and install docker
+  apt:
+    update_cache: true
+    name: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io 
+      - docker-compose-plugin
+    state: latest
