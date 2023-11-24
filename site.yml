@@ -6,6 +6,7 @@
     user: adrian
   roles:
     - update
+    - update_hosts
     - ssh
     - sudo
     - unattended-upgrades

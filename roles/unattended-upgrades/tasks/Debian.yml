@@ -4,31 +4,31 @@
     state: latest
 
 - name: Enable distro updates/reboot
-  ansible.builtin.lineinfile:
+  lineinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
-    regexp: '\${distro_id}:\${distro_codename}-updates'
+    search_string: '${distro_id}:${distro_codename}-updates'
     line: '"${distro_id}:${distro_codename}-updates";'
 
 - name: Enable automatic reboot if required
-  ansible.builtin.lineinfile:
+  lineinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
-    regexp: 'Unattended-Upgrade::Automatic-Reboot "false";'
+    search_string: 'Unattended-Upgrade::Automatic-Reboot "false";'
     line: 'Unattended-Upgrade::Automatic-Reboot "true";'
 
 - name: Allow automatic reboot if user is active
-  ansible.builtin.lineinfile:
+  lineinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
-    regexp: 'Unattended-Upgrade::Automatic-Reboot-WithUsers "true";'
+    search_string: 'Unattended-Upgrade::Automatic-Reboot-WithUsers "true";'
     line: 'Unattended-Upgrade::Automatic-Reboot-WithUsers "true";'
 
 - name: Set automatic reboot to 2:00 am
-  ansible.builtin.lineinfile:
+  lineinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
-    regexp: 'Unattended-Upgrade::Automatic-Reboot-Time'
+    search_string: 'Unattended-Upgrade::Automatic-Reboot-Time'
     line: 'Unattended-Upgrade::Automatic-Reboot-Time "02:00";'
 
 - name: Log to syslog on automatic updates
-  ansible.builtin.lineinfile:
+  lineinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
-    regexp: 'Unattended-Upgrade::SyslogEnable'
+    search_string: 'Unattended-Upgrade::SyslogEnable'
     line: 'Unattended-Upgrade::SyslogEnable "true";'

@@ -10,7 +10,7 @@
 
 - name: Disable root login over ssh
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: "^#?PermitRootLogin"
     line: "PermitRootLogin {{ permit_root_login }}"
     state: present
@@ -19,7 +19,7 @@
 
 - name: Disable password login over ssh
   lineinfile:
-    dest: /etc/ssh/sshd_config
+    path: /etc/ssh/sshd_config
     regexp: "^#?PasswordAuthentication"
     line: "PasswordAuthentication {{ password_authentication }}"
     state: present

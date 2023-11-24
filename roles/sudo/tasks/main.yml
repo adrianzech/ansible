@@ -1,9 +1,7 @@
 ---
 - name: Allow user to have passwordless sudo
-  become: yes
   lineinfile:
-    dest: /etc/sudoers
-    state: present
-    regexp: '^{{ user }}'
-    line: '{{ user }} ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s'
+    path: /etc/sudoers
+    search_string: "{{ user }}"
+    line: "{{ user }} ALL=(ALL) NOPASSWD: ALL"
+    validate: "visudo -cf %s"
