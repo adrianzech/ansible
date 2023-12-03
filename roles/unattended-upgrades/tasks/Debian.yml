@@ -6,8 +6,8 @@
 - name: Enable distro updates/reboot
   lineinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
-    search_string: '${distro_id}:${distro_codename}-updates'
-    line: '"${distro_id}:${distro_codename}-updates";'
+    search_string: 'origin=Debian,codename=${distro_codename}-updates'
+    line: '"origin=Debian,codename=${distro_codename}-updates:";'
 
 - name: Enable automatic reboot if required
   lineinfile:

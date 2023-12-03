@@ -5,3 +5,4 @@ packages:
   - qemu-guest-agent
   - htop
   - screen
+  - vim
