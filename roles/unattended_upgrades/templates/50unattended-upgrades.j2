@@ -1,0 +1,25 @@
+// Managed by Ansible
+
+Unattended-Upgrade::Origins-Pattern {
+        "origin=Debian,codename=${distro_codename},label=Debian";
+        "origin=Debian,codename=${distro_codename}-updates,label=Debian";
+        "origin=Debian,codename=${distro_codename}-security,label=Debian-Security";
+};
+
+Unattended-Upgrade::Package-Blacklist {
+};
+
+Unattended-Upgrade::DevRelease "false";
+Unattended-Upgrade::Allow-downgrade "false";
+Unattended-Upgrade::InstallOnShutdown "false";
+Unattended-Upgrade::AutoFixInterruptedDpkg "true";
+Unattended-Upgrade::MinimalSteps "true";
+
+Unattended-Upgrade::SyslogEnable "true";
+Unattended-Upgrade::OnlyOnACPower "false";
+Unattended-Upgrade::Skip-Updates-On-Metered-Connections "true";
+Unattended-Upgrade::Verbose "false";
+
+Unattended-Upgrade::Automatic-Reboot "true";
+Unattended-Upgrade::Automatic-Reboot-WithUsers "false";
+Unattended-Upgrade::Automatic-Reboot-Time "02:00";

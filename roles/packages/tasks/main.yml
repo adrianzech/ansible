@@ -1,6 +1,11 @@
 ---
-- name: Include os specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
-
-- name: Include os specific tasks
-  include_tasks: "{{ ansible_os_family }}.yml"
+- name: Install packages
+  ansible.builtin.apt:
+    name:
+      - nfs-common
+      - net-tools
+      - qemu-guest-agent
+      - htop
+      - screen
+      - vim
+    state: present

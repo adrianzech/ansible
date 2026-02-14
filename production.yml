@@ -1,13 +1,4 @@
 homelab:
   hosts:
-    app.local.zech.co:
+    docker.local.zech.co:
       ansible_host: 10.0.10.100
-    cmk.local.zech.co:
-      ansible_host: 10.0.10.110
-    ptyl-master.local.zech.co:
-      ansible_host: 10.0.20.100
-    ptyl-node1.local.zech.co:
-      ansible_host: 10.0.20.110
-    ptyl-node2.local.zech.co:
-      ansible_host: 10.0.20.120
-

@@ -1,7 +1,9 @@
 ---
-- name: Allow user to have passwordless sudo
-  lineinfile:
-    path: /etc/sudoers
-    search_string: "{{ user }}"
-    line: "{{ user }} ALL=(ALL) NOPASSWD: ALL"
+- name: Allow user to have passwordless sudo via sudoers.d
+  ansible.builtin.copy:
+    dest: "/etc/sudoers.d/{{ user }}"
+    content: "{{ user }} ALL=(ALL) NOPASSWD: ALL\n"
+    owner: root
+    group: root
+    mode: "0440"
     validate: "visudo -cf %s"

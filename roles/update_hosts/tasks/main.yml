@@ -1,6 +1,6 @@
 ---
 - name: Update /etc/hosts
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/hosts
     search_string: "127.0.1.1"
-    line: "{{ ansible_host }} {{ ansible_hostname }}.{{ ansible_dns['search'][0] }} {{ ansible_hostname }}"
+    line: "127.0.1.1 {{ ansible_fqdn | default(ansible_hostname, true) }} {{ ansible_hostname }}"

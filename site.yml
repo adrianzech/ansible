@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Configure homelab hosts
+  hosts: all
   remote_user: adrian
   become: true
   vars:
@@ -9,7 +10,6 @@
     - update_hosts
     - ssh
     - sudo
-    - unattended-upgrades
+    - unattended_upgrades
     - packages
     - docker
-    
