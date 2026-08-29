@@ -5,6 +5,11 @@
   vars:
     user: adrian
   pre_tasks:
+    - name: Ensure Ansible root temporary directory exists
+      ansible.builtin.raw: install -d -o root -g root -m 0700 /root/.ansible/tmp
+      args:
+        creates: /root/.ansible/tmp
+
     - name: Ensure the pre-provisioned management user exists
       ansible.builtin.getent:
         database: passwd
