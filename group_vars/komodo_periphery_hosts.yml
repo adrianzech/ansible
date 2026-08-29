@@ -1,0 +1,4 @@
+---
+komodo_periphery_image: ghcr.io/moghtech/komodo-periphery:2.3.2
+komodo_periphery_host: https://komodo.zech.co
+komodo_periphery_core_address: ws://10.0.10.100:9120

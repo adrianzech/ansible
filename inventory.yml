@@ -10,7 +10,16 @@ all:
               ansible_host: 10.0.30.100
             git.local.zech.co:
               ansible_host: 10.0.10.110
+            ansible.local.zech.co:
+              ansible_host: 10.0.10.120
         docker_hosts:
           hosts:
             docker-prod.local.zech.co:
             docker-dev.local.zech.co:
+            git.local.zech.co:
+            ansible.local.zech.co:
+        komodo_periphery_hosts:
+          hosts:
+            docker-dev.local.zech.co:
+            git.local.zech.co:
+            ansible.local.zech.co:

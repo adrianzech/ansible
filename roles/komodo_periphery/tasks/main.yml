@@ -1,0 +1,62 @@
+---
+- name: Gather Docker service facts
+  ansible.builtin.service_facts:
+
+- name: Assert Docker is running
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.services['docker.service'] is defined
+      - ansible_facts.services['docker.service'].state == 'running'
+    fail_msg: Docker must be installed and running before Komodo Periphery is deployed.
+
+- name: Gather Komodo Periphery user account
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ komodo_periphery_user }}"
+
+- name: Gather Docker group
+  ansible.builtin.getent:
+    database: group
+    key: docker
+
+- name: Set Komodo Periphery identity facts
+  ansible.builtin.set_fact:
+    komodo_periphery_uid: "{{ ansible_facts.getent_passwd[komodo_periphery_user][1] }}"
+    komodo_periphery_gid: "{{ ansible_facts.getent_passwd[komodo_periphery_user][2] }}"
+    komodo_periphery_docker_gid: "{{ ansible_facts.getent_group.docker[1] }}"
+
+- name: Create Komodo Periphery directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ komodo_periphery_uid }}"
+    group: "{{ komodo_periphery_gid }}"
+    mode: "0755"
+  loop:
+    - "{{ komodo_periphery_project_directory }}"
+    - "{{ komodo_periphery_project_directory }}/shared"
+    - "{{ komodo_periphery_project_directory }}/shared/keys"
+    - "{{ komodo_periphery_repo_directory }}"
+    - "{{ komodo_periphery_build_directory }}"
+    - "{{ komodo_periphery_stack_directory }}"
+
+- name: Configure Komodo Periphery Compose project
+  ansible.builtin.template:
+    src: compose.yaml.j2
+    dest: "{{ komodo_periphery_project_directory }}/compose.yaml"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Configure Komodo Periphery environment
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ komodo_periphery_project_directory }}/.env"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Start Komodo Periphery
+  community.docker.docker_compose_v2:
+    project_src: "{{ komodo_periphery_project_directory }}"
+    state: present

@@ -1,0 +1,18 @@
+---
+- name: Configure Komodo Periphery host
+  hosts: komodo_periphery_hosts
+  gather_facts: false
+  become: true
+  vars:
+    user: adrian
+  pre_tasks:
+    - name: Require an explicit single-host limit
+      ansible.builtin.assert:
+        that:
+          - ansible_limit | default('', true) | length > 0
+          - ansible_play_hosts_all | length == 1
+        fail_msg: >-
+          Run this playbook with --limit <hostname> for exactly one
+          komodo_periphery_hosts host.
+  roles:
+    - komodo_periphery

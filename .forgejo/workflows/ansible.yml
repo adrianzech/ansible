@@ -26,7 +26,7 @@ jobs:
         run: ansible-galaxy collection install -r collections/requirements.yml
 
       - name: Check playbook syntax
-        run: ansible-playbook -i production.yml site.yml --syntax-check
+        run: ansible-playbook -i inventory.yml playbooks/homelab.yml --syntax-check
 
       - name: Lint playbooks
         run: ansible-lint
