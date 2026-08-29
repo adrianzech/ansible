@@ -73,8 +73,35 @@ allows one explicitly limited host per run. Current periphery hosts are
 ansible-playbook -i inventory.yml playbooks/komodo-periphery.yml --limit docker-dev.local.zech.co
 ```
 
+The onboarding key is managed in an encrypted vault file. Create it once and
+commit the encrypted file:
+
+```bash
+ansible-vault create roles/komodo_periphery/vars/vault.yml
+```
+
+Add the following value when prompted:
+
+```yaml
+komodo_periphery_onboarding_key: <onboarding-key-from-komodo>
+```
+
+Run the deployment with an interactive vault password:
+
+```bash
+ansible-playbook -i inventory.yml playbooks/komodo-periphery.yml --limit docker-dev.local.zech.co --ask-vault-pass
+```
+
+Alternatively, store the vault password in a local file outside the repository
+with mode `0600` and use it when running the playbook:
+
+```bash
+ansible-playbook -i inventory.yml playbooks/komodo-periphery.yml --limit docker-dev.local.zech.co --vault-password-file ~/.config/ansible/homelab.vault-pass
+```
+
 The role creates the persistent key directory but does not manage the
-periphery public key; the container generates it on first start.
+periphery public key; the container generates it on first start. The onboarding
+key remains in `/opt/komodo/.env`, which is owned by root and has mode `0600`.
 
 ## Quality checks
 

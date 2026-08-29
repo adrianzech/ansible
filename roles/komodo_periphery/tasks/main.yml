@@ -1,4 +1,18 @@
 ---
+- name: Load Komodo Periphery vault variables
+  ansible.builtin.include_vars:
+    file: "{{ role_path }}/vars/vault.yml"
+  no_log: true
+
+- name: Assert Komodo Periphery onboarding key is configured
+  ansible.builtin.assert:
+    that:
+      - komodo_periphery_onboarding_key | default('', true) | length > 0
+    fail_msg: >-
+      Define komodo_periphery_onboarding_key in the encrypted
+      roles/komodo_periphery/vars/vault.yml file.
+  no_log: true
+
 - name: Gather Docker service facts
   ansible.builtin.service_facts:
 
@@ -54,7 +68,8 @@
     dest: "{{ komodo_periphery_project_directory }}/.env"
     owner: root
     group: root
-    mode: "0644"
+    mode: "0600"
+  no_log: true
 
 - name: Start Komodo Periphery
   community.docker.docker_compose_v2:
