@@ -13,3 +13,11 @@
     name: systemd-timesyncd
     state: started
     enabled: true
+
+- name: Suppress the Debian login banner for the management user
+  ansible.builtin.file:
+    path: "{{ ansible_facts.getent_passwd[user][4] }}/.hush_login"
+    state: touch
+    owner: "{{ user }}"
+    group: "{{ ansible_facts.getent_passwd[user][2] }}"
+    mode: "0644"
