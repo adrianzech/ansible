@@ -76,8 +76,8 @@
   ansible.builtin.template:
     src: periphery-compose.yaml.j2
     dest: "{{ komodo_periphery_project_directory }}/compose.yaml"
-    owner: root
-    group: root
+    owner: "{{ komodo_periphery_user }}"
+    group: "{{ komodo_periphery_user }}"
     mode: "0644"
   when: "'komodo_periphery_hosts' in group_names"
 

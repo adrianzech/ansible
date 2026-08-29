@@ -102,7 +102,8 @@ ansible-playbook -i inventory.yml playbooks/komodo-periphery.yml --limit docker-
 
 The role creates the persistent key directory but does not manage the
 periphery public key; the container generates it on first start. The onboarding
-key remains in `/opt/komodo/.env`, which is owned by root and has mode `0600`.
+key remains in `/opt/komodo/.env`, which is owned by the management user and
+has mode `0600`.
 
 ## Komodo updates
 

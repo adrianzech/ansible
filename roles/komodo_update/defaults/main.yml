@@ -1,4 +1,5 @@
 ---
+komodo_periphery_user: "{{ user | default('adrian') }}"
 komodo_periphery_root_directory: /opt
 komodo_periphery_project_directory: /opt/komodo
 komodo_periphery_stack_directory: /opt/docker/stacks

@@ -64,16 +64,16 @@
   ansible.builtin.template:
     src: compose.yaml.j2
     dest: "{{ komodo_periphery_project_directory }}/compose.yaml"
-    owner: root
-    group: root
+    owner: "{{ komodo_periphery_user }}"
+    group: "{{ komodo_periphery_user }}"
     mode: "0644"
 
 - name: Configure Komodo Periphery environment
   ansible.builtin.template:
     src: .env.j2
     dest: "{{ komodo_periphery_project_directory }}/.env"
-    owner: root
-    group: root
+    owner: "{{ komodo_periphery_user }}"
+    group: "{{ komodo_periphery_user }}"
     mode: "0600"
   no_log: true
 
