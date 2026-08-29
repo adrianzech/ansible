@@ -13,8 +13,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /proc:/proc
-      - {{ komodo_periphery_project_directory }}/shared/keys:/config/keys
-      - {{ komodo_periphery_root_directory }}:{{ komodo_periphery_root_directory }}
+      - {{ komodo_update_project_directory }}/shared/keys:/config/keys
+      - {{ komodo_update_root_directory }}:{{ komodo_update_root_directory }}
     networks:
       - internal
 

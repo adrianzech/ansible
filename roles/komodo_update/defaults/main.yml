@@ -1,9 +1,9 @@
 ---
-komodo_periphery_user: "{{ user | default('adrian') }}"
-komodo_periphery_root_directory: /opt
-komodo_periphery_project_directory: /opt/komodo
-komodo_periphery_stack_directory: /opt/docker/stacks
-komodo_periphery_repo_directory: /opt/komodo/repos
-komodo_periphery_build_directory: /opt/komodo/builds
+komodo_update_user: "{{ user | default('adrian') }}"
+komodo_update_root_directory: /opt
+komodo_update_project_directory: /opt/komodo
+komodo_update_stack_directory: /opt/docker/stacks
+komodo_update_repo_directory: /opt/komodo/repos
+komodo_update_build_directory: /opt/komodo/builds
 komodo_update_production_compose_file: compose.yaml
 komodo_update_production_override_file: compose.ansible.yaml
