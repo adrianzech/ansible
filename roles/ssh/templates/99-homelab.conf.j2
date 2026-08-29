@@ -1,0 +1,5 @@
+# Managed by Ansible. Local SSH hardening policy.
+PermitRootLogin {{ ssh_permit_root_login }}
+PasswordAuthentication {{ ssh_password_authentication }}
+KbdInteractiveAuthentication {{ ssh_kbd_interactive_authentication }}
+X11Forwarding {{ ssh_x11_forwarding }}

@@ -1,0 +1,15 @@
+---
+- name: Install time synchronisation service
+  ansible.builtin.apt:
+    name: systemd-timesyncd
+    state: present
+
+- name: Set the server timezone
+  community.general.timezone:
+    name: "{{ system_timezone }}"
+
+- name: Ensure time synchronisation is enabled
+  ansible.builtin.service:
+    name: systemd-timesyncd
+    state: started
+    enabled: true

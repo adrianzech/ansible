@@ -1,0 +1,8 @@
+---
+- name: Update /etc/hosts
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    search_string: "127.0.1.1"
+    line: >-
+      127.0.1.1 {{ ansible_facts.get('fqdn') | default(ansible_facts['hostname'], true) }}
+      {{ ansible_facts['hostname'] }}

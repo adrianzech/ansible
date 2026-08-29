@@ -1,0 +1,12 @@
+---
+- name: Install packages
+  ansible.builtin.apt:
+    name:
+      - nfs-common
+      - net-tools
+      - htop
+      - screen
+      - vim
+      - tree
+      - rsync
+    state: present

@@ -1,0 +1,44 @@
+---
+- name: Configure homelab hosts
+  hosts: homelab
+  become: true
+  vars:
+    user: adrian
+  pre_tasks:
+    - name: Ensure the pre-provisioned management user exists
+      ansible.builtin.getent:
+        database: passwd
+        key: "{{ user }}"
+
+    - name: Assert the pre-provisioned management user is available
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.getent_passwd[user] is defined
+        fail_msg: >-
+          The management user {{ user }} must exist before this playbook runs.
+          Bootstrap it through the server image or a dedicated bootstrap playbook.
+  roles:
+    - role: update
+      tags:
+        - never
+        - updates
+    - update_hosts
+    - system
+    - ssh
+    - sudo
+    - unattended_upgrades
+    - packages
+
+- name: Configure QEMU guest agents
+  hosts: qemu_hosts
+  become: true
+  roles:
+    - qemu_guest_agent
+
+- name: Configure Docker hosts
+  hosts: docker_hosts
+  become: true
+  vars:
+    user: adrian
+  roles:
+    - docker

@@ -1,0 +1,18 @@
+---
+- name: Upgrade all packages
+  ansible.builtin.apt:
+    update_cache: true
+    name: "*"
+    state: latest
+
+- name: Check if reboot is required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: update_reboot_required_file
+
+- name: Reboot server
+  ansible.builtin.reboot:
+    msg: "Reboot initiated by Ansible"
+  when:
+    - update_reboot | bool
+    - update_reboot_required_file.stat.exists

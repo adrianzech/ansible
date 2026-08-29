@@ -1,0 +1,16 @@
+all:
+  children:
+    homelab:
+      children:
+        qemu_hosts:
+          hosts:
+            docker-prod.local.zech.co:
+              ansible_host: 10.0.10.100
+            docker-dev.local.zech.co:
+              ansible_host: 10.0.30.100
+            git.local.zech.co:
+              ansible_host: 10.0.10.110
+        docker_hosts:
+          hosts:
+            docker-prod.local.zech.co:
+            docker-dev.local.zech.co:
