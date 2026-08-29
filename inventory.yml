@@ -23,3 +23,15 @@ all:
             docker-dev.local.zech.co:
             git.local.zech.co:
             ansible.local.zech.co:
+    komodo_update_hosts:
+      children:
+        komodo_update_core_hosts:
+        komodo_update_periphery_hosts:
+    komodo_update_core_hosts:
+      hosts:
+        docker-prod.local.zech.co:
+    komodo_update_periphery_hosts:
+      children:
+        komodo_periphery_hosts:
+      hosts:
+        docker-prod.local.zech.co:

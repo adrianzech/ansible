@@ -1,0 +1,9 @@
+services:
+  database:
+    image: mongo:{{ komodo_mongodb_version }}
+
+  core:
+    image: ghcr.io/moghtech/komodo-core:{{ komodo_version }}
+
+  periphery:
+    image: ghcr.io/moghtech/komodo-periphery:{{ komodo_version }}

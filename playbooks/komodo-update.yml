@@ -1,0 +1,7 @@
+---
+- name: Update Komodo services
+  hosts: komodo_update_hosts
+  gather_facts: false
+  become: true
+  roles:
+    - komodo_update

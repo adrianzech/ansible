@@ -13,6 +13,12 @@
       roles/komodo_periphery/vars/vault.yml file.
   no_log: true
 
+- name: Assert Komodo version is configured
+  ansible.builtin.assert:
+    that:
+      - komodo_version | default('', true) | length > 0
+    fail_msg: Define komodo_version in group_vars/komodo_update_hosts/main.yml.
+
 - name: Gather Docker service facts
   ansible.builtin.service_facts:
 

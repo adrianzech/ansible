@@ -1,0 +1,90 @@
+---
+- name: Gather Docker service facts
+  ansible.builtin.service_facts:
+
+- name: Assert Komodo image versions are configured
+  ansible.builtin.assert:
+    that:
+      - komodo_version | default('', true) | length > 0
+      - komodo_mongodb_version | default('', true) | length > 0
+    fail_msg: >-
+      Define komodo_version and komodo_mongodb_version in
+      group_vars/komodo_update_hosts/main.yml.
+
+- name: Assert Docker is running
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.services['docker.service'] is defined
+      - ansible_facts.services['docker.service'].state == 'running'
+    fail_msg: Docker must be installed and running before Komodo can be updated.
+
+- name: Check production Komodo Compose project
+  ansible.builtin.stat:
+    path: >-
+      {{ komodo_periphery_project_directory }}/{{ komodo_update_production_compose_file }}
+  register: komodo_update_production_compose
+  when: "'komodo_update_core_hosts' in group_names"
+
+- name: Assert production Komodo Compose project is available
+  ansible.builtin.assert:
+    that:
+      - komodo_update_production_compose.stat.exists
+      - komodo_update_production_compose.stat.isreg
+    fail_msg: >-
+      The production Komodo Compose file must exist at
+      {{ komodo_periphery_project_directory }}/{{ komodo_update_production_compose_file }}.
+  when: "'komodo_update_core_hosts' in group_names"
+
+- name: Configure production Komodo image overrides
+  ansible.builtin.template:
+    src: production-compose.override.yaml.j2
+    dest: >-
+      {{ komodo_periphery_project_directory }}/{{ komodo_update_production_override_file }}
+    owner: root
+    group: root
+    mode: "0644"
+  when: "'komodo_update_core_hosts' in group_names"
+
+- name: Update production Komodo services
+  community.docker.docker_compose_v2:
+    project_src: "{{ komodo_periphery_project_directory }}"
+    files:
+      - "{{ komodo_update_production_compose_file }}"
+      - "{{ komodo_update_production_override_file }}"
+    state: present
+    pull: always
+    recreate: auto
+  when: "'komodo_update_core_hosts' in group_names"
+
+- name: Check Komodo Periphery Compose project
+  ansible.builtin.stat:
+    path: "{{ komodo_periphery_project_directory }}/compose.yaml"
+  register: komodo_update_periphery_compose
+  when: "'komodo_periphery_hosts' in group_names"
+
+- name: Assert Komodo Periphery Compose project is available
+  ansible.builtin.assert:
+    that:
+      - komodo_update_periphery_compose.stat.exists
+      - komodo_update_periphery_compose.stat.isreg
+    fail_msg: >-
+      The Komodo Periphery Compose file must exist at
+      {{ komodo_periphery_project_directory }}/compose.yaml.
+  when: "'komodo_periphery_hosts' in group_names"
+
+- name: Configure Komodo Periphery image
+  ansible.builtin.template:
+    src: periphery-compose.yaml.j2
+    dest: "{{ komodo_periphery_project_directory }}/compose.yaml"
+    owner: root
+    group: root
+    mode: "0644"
+  when: "'komodo_periphery_hosts' in group_names"
+
+- name: Update Komodo Periphery
+  community.docker.docker_compose_v2:
+    project_src: "{{ komodo_periphery_project_directory }}"
+    state: present
+    pull: always
+    recreate: auto
+  when: "'komodo_periphery_hosts' in group_names"

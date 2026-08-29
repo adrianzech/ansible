@@ -15,6 +15,7 @@ Ansible setup for Debian-based homelab hosts.
 
 - `playbooks/homelab.yml`: Main homelab playbook
 - `playbooks/komodo-periphery.yml`: Explicit single-host Komodo Periphery deployment
+- `playbooks/komodo-update.yml`: Komodo service image updates
 - `inventory.yml`: Homelab inventory
 - `roles/`: Roles for system configuration, SSH, Docker, updates, and packages
 
@@ -103,6 +104,35 @@ The role creates the persistent key directory but does not manage the
 periphery public key; the container generates it on first start. The onboarding
 key remains in `/opt/komodo/.env`, which is owned by root and has mode `0600`.
 
+## Komodo updates
+
+Komodo updates are performed independently from the baseline playbook. The
+update covers Komodo Core, MongoDB and Periphery on Docker-Prod, plus
+Periphery on the other Periphery hosts. Affected containers can be briefly
+unavailable while they are recreated.
+
+```bash
+ansible-playbook -i inventory.yml playbooks/komodo-update.yml
+```
+
+Limit the update to one host when needed:
+
+```bash
+ansible-playbook -i inventory.yml playbooks/komodo-update.yml --limit docker-prod.local.zech.co
+```
+
+Set the desired Komodo and MongoDB image versions in
+`group_vars/komodo_update_hosts/main.yml`:
+
+```yaml
+komodo_version: "2.3.2"
+komodo_mongodb_version: "8.3.8"
+```
+
+On Docker-Prod, the role manages only `/opt/komodo/compose.ansible.yaml` as a
+Compose override. The existing `compose.yaml` and `.env` files, including
+their secrets, remain unmanaged.
+
 ## Quality checks
 
 Check syntax:
@@ -124,6 +154,7 @@ ansible-lint
 - `qemu_hosts`: Also receives the QEMU Guest Agent.
 - `komodo_periphery_hosts`: Eligible for the separate, explicitly limited
   Komodo Periphery deployment.
+- `komodo_update_hosts`: Receives the separate Komodo update playbook.
 
 After the first run, SSH access is available by key only. Access filtering is
 handled by the upstream OPNsense system.
