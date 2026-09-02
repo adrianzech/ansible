@@ -126,7 +126,7 @@ Set the desired Komodo and MongoDB image versions in
 `group_vars/komodo_update_hosts/main.yml`:
 
 ```yaml
-komodo_version: "2.3.2"
+komodo_version: "2.3.3"
 komodo_mongodb_version: "8.3.8"
 ```
 
