@@ -6,4 +6,5 @@ komodo_update_stack_directory: /opt/docker/stacks
 komodo_update_repo_directory: /opt/komodo/repos
 komodo_update_build_directory: /opt/komodo/builds
 komodo_update_production_compose_file: compose.yaml
-komodo_update_production_override_file: compose.ansible.yaml
+komodo_update_production_override_file: compose.override.yaml
+komodo_update_legacy_production_override_file: compose.ansible.yaml

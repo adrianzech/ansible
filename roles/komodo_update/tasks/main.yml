@@ -40,10 +40,19 @@
     src: production-compose.override.yaml.j2
     dest: >-
       {{ komodo_update_project_directory }}/{{ komodo_update_production_override_file }}
-    owner: root
-    group: root
+    owner: "{{ komodo_update_user }}"
+    group: "{{ komodo_update_user }}"
     mode: "0644"
   when: "'komodo_update_core_hosts' in group_names"
+
+- name: Remove legacy production Komodo image override
+  ansible.builtin.file:
+    path: >-
+      {{ komodo_update_project_directory }}/{{ komodo_update_legacy_production_override_file }}
+    state: absent
+  when:
+    - "'komodo_update_core_hosts' in group_names"
+    - komodo_update_legacy_production_override_file != komodo_update_production_override_file
 
 - name: Update production Komodo services
   community.docker.docker_compose_v2:

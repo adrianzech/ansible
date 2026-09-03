@@ -130,7 +130,7 @@ komodo_version: "2.3.3"
 komodo_mongodb_version: "8.3.8"
 ```
 
-On Docker-Prod, the role manages only `/opt/komodo/compose.ansible.yaml` as a
+On Docker-Prod, the role manages only `/opt/komodo/compose.override.yaml` as a
 Compose override. The existing `compose.yaml` and `.env` files, including
 their secrets, remain unmanaged.
 
